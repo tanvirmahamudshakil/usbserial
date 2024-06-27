@@ -4,24 +4,26 @@ version '1.0'
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath 'com.android.tools.build:gradle:4.1.3'
     }
 }
 
 rootProject.allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         maven { url "https://jitpack.io" }
     }
 
     gradle.projectsEvaluated {
-        tasks.withType(JavaCompile) {
-            options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+        tasks.withType(JavaCompile).tap {
+            configureEach {
+                options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+            }
         }
     }
 
@@ -50,7 +52,9 @@ android {
 
 dependencies {
     implementation ('com.github.felHR85:UsbSerial:6.1.0') {
-        exclude group: "com.android.support", module: "support-v4"
+        exclude group: 'com.felhr.deviceids'
+        exclude group: 'com.felhr.usbserial'
+        exclude group: 'com.felhr.utils'
     }
 }
 
